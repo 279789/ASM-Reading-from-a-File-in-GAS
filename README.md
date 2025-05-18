@@ -95,11 +95,11 @@ Ensure that the file `./assets/data` exists and contains **exactly one character
 
 ## 3) Questions
 
-1. What does the `open` syscall return? Why do we store it in `%r12`?
-2. Why is `O_RDONLY` represented as `0`?
-3. How would you modify the loop to increment multiple bytes?
-4. What if the file doesn't exist — how does the system respond?
-5. What's different about incrementing ASCII `'A'` vs `'9'`?
+1. What does the `open` syscall return? Why do we store it in `%r12`? The open syscall does not much, first it does define the syscall number (2= wich stands for open, than it defines the point, where to open, wich in our case is lea path(%rip), %rdi. Next definition is the flag 0 for read only, that says, that the data is read only. Then the syscall gets executed. After that the file descriptor gets saved in %r12 for later use. We store in %r12, to use the fd later for reading from the file.
+2. Why is `O_RDONLY` represented as `0`? Thats cause 0 is the definiton for readonly. Readonly makes the most sense, cause there is no nead for setting a bit. For example, writeonly wäre 1.
+3. How would you modify the loop to increment multiple bytes? I did it by Reading to bytes insetad of one, and by incb Buffer and incb Buffer+1, that way, both bits got read and both bits got incrementet 1 bit.
+4. What if the file doesn't exist — how does the system respond? It does not respond
+5. What's different about incrementing ASCII `'A'` vs `'9'`? The differnce between is that they're at different places in the asci code. For example, A has the hex value of 41, Number 9 has the hex value of 39.
 
 <details>
   <summary>Hint: ASCII Table</summary>
